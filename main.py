@@ -11,7 +11,7 @@ import os
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("sqlite:///MyBooks.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///MyBooks.db"
 
 # # os.environ.get("DATABASE_URL").replace("://", "ql://", 1)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
