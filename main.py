@@ -5,12 +5,13 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, HiddenField
 from wtforms.validators import DataRequired
 import gunicorn
+import psycopg2
 import os
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///MyBooks.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -71,3 +72,4 @@ def delete():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
