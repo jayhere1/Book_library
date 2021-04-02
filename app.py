@@ -4,8 +4,6 @@ from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, HiddenField
 from wtforms.validators import DataRequired
-from uuid import uuid4
-from sqlalchemy import Column
 import os
 
 app = Flask(__name__)
@@ -15,7 +13,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///MyBooks.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = os.environ.get("secret_key")
+
 
 class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -48,7 +47,7 @@ def add():
         if form.validate_on_submit():
             # CREATE RECORD
             new_book = Book(
-                id = request.form["id"],
+                id=request.form["id"],
                 title=request.form["title"],
                 author=request.form["author"],
                 genre=request.form["genre"]
@@ -63,8 +62,6 @@ def add():
 @app.route("/delete", methods=["GET"])
 def delete():
     book_id = request.args.get('id')
-
-    # DELETE A RECORD BY ID
     book_to_delete = Book.query.get(book_id)
     db.session.delete(book_to_delete)
     db.session.commit()
