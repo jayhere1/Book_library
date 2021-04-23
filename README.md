@@ -1,6 +1,6 @@
 # Book_library
 
-A book library app to store and retrieve a list of boks owned or liked.
+A book library app to store and retrieve a list of books owned or liked.
 
 Resources used: 
 Python, 
